@@ -103,18 +103,19 @@
     determineRatingBgc(book){
       const rating = book.rating;
       const ratingWidth = (rating * 10) + '%';
-      const filler = document.querySelector( book.ratingBgc);
-      console.log(ratingWidth, filler);
-      filler.style.ratingWidth = ratingWidth;
+      const filler = document.querySelector('.book__rating__fill');
+      const width = filler.ratingWidth;
 
+
+      console.log(width, ratingWidth, filler);
       if(rating < 6){
-        filler.style.background = 'linear-gradient(to bottom, #fefcea 0%, #f1da36 100%)';
+        filler.background = 'linear-gradient(to bottom, #fefcea 0%, #f1da36 100%)';
       }else if (rating > 6 && rating <= 8){
-        filler.style.background = 'linear-gradient(to bottom, #b4df5b 0%,#b4df5b 100%)';
+        filler.background = 'linear-gradient(to bottom, #b4df5b 0%,#b4df5b 100%)';
       }else if (rating > 8 && rating <= 9){
-        filler.style.background = 'linear-gradient(to bottom, #299a0b 0%, #299a0b 100%)';
+        filler.background = 'linear-gradient(to bottom, #299a0b 0%, #299a0b 100%)';
       }else{
-        filler.style.background = 'linear-gradient(to bottom, #ff0084 0%,#ff0084 100%)';
+        filler.background = 'linear-gradient(to bottom, #ff0084 0%,#ff0084 100%)';
       }
     }
   }
