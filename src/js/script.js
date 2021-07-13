@@ -15,13 +15,6 @@
     booksPannel:{
       list: '.books-list',
     },
-
-    bookTemplate:{
-      image: '.book__image',
-      id: 'id',
-      favourite: 'favourite',
-      ratings: '.book__rating__fill',
-    },
   };
 
   const favoriteBooks= [];
@@ -40,18 +33,25 @@
     }
 
     initData(){
-      this.data = dataSource.books;
+      const thisBookList = this;
+      this.data = thisBookList.data;
     }
 
     render(){
       const thisBookList = this;
 
-      for(const book of dataSource.books){
+      for(let book of dataSource.books){
+        const rating = book.rating;
+        const ratingWidth = rating * 10;
+        const ratingBgc = thisBookList.determineRatingBgc(rating);
+
+        book.ratingWidth = ratingWidth;
+        book.ratingBgc = ratingBgc;
+
         const generatedHTML = templates.books(book);
         thisBookList.element = utils.createDOMFromHTML(generatedHTML);
-        const booksPanel = document.querySelector(select.booksPannel.list);
-        const ratingBgc = thisBookList.determineRatingBgc(book);
-        booksPanel.appendChild(thisBookList.element, ratingBgc);
+        const booksContainer = document.querySelector(select.booksPannel.list);
+        booksContainer.appendChild(thisBookList.element);
       }
     }
 
@@ -100,22 +100,15 @@
       }
     }
 
-    determineRatingBgc(book){
-      const rating = book.rating;
-      const ratingWidth = (rating * 10) + '%';
-      const filler = document.querySelector('.book__rating__fill');
-      const width = filler.ratingWidth;
-
-
-      console.log(width, ratingWidth, filler);
+    determineRatingBgc(rating){
       if(rating < 6){
-        filler.background = 'linear-gradient(to bottom, #fefcea 0%, #f1da36 100%)';
+        return 'linear-gradient(to bottom, #fefcea 0%, #f1da36 100%)';
       }else if (rating > 6 && rating <= 8){
-        filler.background = 'linear-gradient(to bottom, #b4df5b 0%,#b4df5b 100%)';
+        return 'linear-gradient(to bottom, #b4df5b 0%,#b4df5b 100%)';
       }else if (rating > 8 && rating <= 9){
-        filler.background = 'linear-gradient(to bottom, #299a0b 0%, #299a0b 100%)';
+        return 'linear-gradient(to bottom, #299a0b 0%, #299a0b 100%)';
       }else{
-        filler.background = 'linear-gradient(to bottom, #ff0084 0%,#ff0084 100%)';
+        return'linear-gradient(to bottom, #ff0084 0%,#ff0084 100%)';
       }
     }
   }
